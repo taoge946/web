@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>视频</title>
+  <script type="javascript" src="test.js"></script>
+</head>
+<body>
+<!--添加视频-->
+<div class="video">
+  <video src="1.mp4" width="600px" height="480px" id="videoPlayer" ontimeupdate="progressUpdate()">
+  </video>
+</div>
+<!--进度条和时间显示-->
+<div id="barContainer">
+  <div id="durationBar">
+    <div id="positionBar"><span id="displayStatus">进度条</span></div>
+  </div>
+</div>
+<!--6个工作按键-->
+<div class="btn">
+  <button onclick="play()">播放</button>
+  <button onclick="pause()">暂停</button>
+  <button onclick="stop()">停止</button>
+  <button onclick="speedUp()">加速播放</button>
+  <button onclick="slowDown()">减速播放</button>
+  <button onclick="normalSpeed()">正常速度</button>
+  <button onclick="half()">跳转视频</button>
+</div>
+<script>
+  var video;
+  var display;
+  window.onload=function (){
+    video=document.getElementById("videoPlayer") //通过id来获取指定元素
+    display=document.getElementById("displayStatus")
+  }
+  function play(){
+    video.play() ; //定义函数来对应按钮的按动来控制视频
+  }
+  function pause(){
+    video.pause() ;
+  }
+  function stop(){
+    video.pause() ;
+    video.currentTime=0; //将视频暂停并将进度条拖到开头
+  }
+  function speedUp(){
+    video.play() ;
+    video.playbackRate=2; //将视频的播放速度变为2倍
+  }
+  function slowDown(){
+    video.play() ;
+    video.playbackRate=0.5;
+  }
+  function normalSpeed(){
+    video.play() ;
+    video.playbackRate=1;
+  }
+  function  half(){
+    video.play();
+    video.currentTime=20;
+  }
+  //进程更新函数
+  function  progressUpdate(){
+    var positionBar=document.getElementById("positionBar")
+    //时间转换成进度条的长度
+    positionBar.style.width=((video.currentTime/video.duration) * 100)+"%"
+    //将播放时间通过innerHtml方法添加到进度条的span内部，让他显示于页面
+    display.innerHTML=(Math.round(video.currentTime*100)/100)+"秒"
+  }
+</script>
+<br><br><br><br><br><br>
+
+<!--使用事件监听所实现的对视频的操作-->
+<video src="1.mp4" width="600px" height="480px" id="video2"  ontimeupdate="progressUpdate()"></video>
+<!--设置播放按钮和播放时间-->
+<button id="playbutton"  style="float: left">播放</button>
+<span id="time">进度条</span>
+
+<script>
+  //播放暂停功能
+  var play2=document.getElementById("playbutton")
+  var video2=document.getElementById("video2")
+  //显示时间进度
+  video2.addEventListener('timeupdate',function (){  //建立一个对于时间更新的监听，随着时间而随时更新
+    var timeDisplay=document.getElementById("time");
+    timeDisplay.innerHTML=Math.floor(video2.currentTime)+"/"+Math.floor(video2.duration)+"秒"; //显示当前进度和总进度，通过innerHTML来改变这个span中的值从而使它显示出来
+  },false)
+
+  play2.onclick=function(){
+    if(video2.ended){
+      video2.currentTime=0;  //如果媒体播放结束播放时间从0开始
+    }
+    video2[video2.paused? 'play':'pause']()   //通过三元运算执行播放和暂停
+  };
+  video2.addEventListener('play',playEvent,false);
+  video2.addEventListener('pause',pauseEvent,false); //监听播放和暂停事件
+  video2.addEventListener('ended',function (){    //播放结束后停止播放
+    this.pause();
+  },false);
+
+
+  //绑定onclick事件，使这一个按钮既能播放又能暂停，还能显示出不同的字
+  function  playEvent(){
+    video2.play();
+    play2.innerHTML="暂停" ; //点了播放后播放按键就变成暂停了
+  }
+  function  pauseEvent(){
+    video2.pause();
+    play2.innerHTML="播放"
+  }
+
+</script>
+</body>
+</html>

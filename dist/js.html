@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>javascript</title>
+  <link type="text/css" href="test.css" rel="stylesheet">
+  <script type="text/javascript">
+    var s='hello,world'
+  </script>
+</head>
+<body class="bg" id="bg" onkeydown="jianpan()"  onmousedown="pingbi()">
+<form action="" name="form1">
+<button onclick='window.alert("警告")'>警告按钮</button>
+<button onclick='prompt("请输入")'>输入按钮</button>
+<button onclick='window.confirm("请确认")'>确认按钮</button>
+<button onclick="zuhe()">组合弹出框</button>
+<button onclick="get()">获取当前页面的标题，域名以及url</button>
+<button onclick="getmouse()">获取鼠标的x位置</button>
+<input type="button" value="测试" onclick="test()">
+  <a href="javascript:test2()">超链接函数测试</a>
+<br>
+<button onmousedown="longer()" onmouseup="nomarl()">改变div的值</button>
+  <a href="#dd">点击跳转到最后一个div块</a>
+<br><input type="text" id="focus"><br>
+<input type="text" value="你选择一下试试？"><br>
+<textarea name="text" id="" cols="30" rows="10">ssss</textarea><br>
+<input type="password">
+</form>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="mouse" id="aa">试着将鼠标移入移出或是点击</div>
+<div class="mouse" id="bb" onmousedown="danji_shuangji()">分别用左右键点击试试？</div>
+<div class="mouse" id="cc" >按按ctrl和alt或a试试？</div>
+<div class="mouse" id="dd" >测试？</div>
+</body>
+<script type="text/javascript" src="test.js"></script>
+</html>

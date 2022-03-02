@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>李金涛面试OA</title>
+    <script src="jquery-3.6.0.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<form name="form1" enctype="application/x-www-form-urlencoded" id="form1">
+    <table class="table1" border="solid">
+        <caption>请输入以下信息</caption>
+        <tr>
+            <td>主理人姓名:</td>
+            <td><input type="text" id="name"></td>
+        </tr>
+        <tr>
+            <td >简介：</td>
+            <td><textarea name="describe" cols="30" rows="5">请输入个人简介</textarea></td>
+        </tr>
+        <tr>
+            <td>手机：</td>
+            <td><input type="text" name="mobile"></td>
+        </tr>
+        <tr>
+            <td>邮箱：</td>
+            <td><input type="text" name="email"></td>
+        </tr>
+        <tr>
+            <td>微信：</td>
+            <td><input type="text" name="wechat"></td>
+        </tr>
+        <tr>
+            <td>是否为独立商家：</td>
+            <td><input type="radio" value="True" name="exclusive" >是
+                <input type="radio" value="False" name="exclusive" >否</td>
+        </tr>
+    </table>
+    <input type="button" style="position: relative;left: 50px;" onclick="provider_create()" value="提交">
+    <input type="reset" style="position: relative;left: 100px;">
+</form>
+<br><br><br>
+<form action="" name="form2" enctype="multipart/form-data" style="border: solid;width: 390px">
+    请选择头像
+    <input type="file" id="file" accept="multipart/form-data" name="picture" value="选择头像" multiple><br>
+    <input type="button" onclick="pic_upload()" value="上传并预览头像">
+    <input type="reset" value="重新选择图片" style="left: 30px;position: relative" >
+</form>
+<br>
+<div style="width: 720px;height: 960px"> 预览图像如下：
+    <div class="photo" id="result"></div>
+</div>
+<script type="text/javascript">
+    BaseUrl='https://www.camptogo.com';
+    function submit(url,data) {
+        var databack;
+        $.ajax({
+            type: "post",
+            url: 'https://www.camptogo.com',
+            data: data,
+            headers:{'Username':'testeradmin','Password': 'testerpassword',"Content-Type":"text/plain;charset=UTF-8"},
+            dataType: 'json',
+            success: function (data) {
+                databack=data;
+                alert('数据已上传')
+            },
+            error: function (data) {
+                alert('访问服务器失败')
+            }
+        })
+        return databack
+    }
+    function get_form(){
+        var form=document.getElementById("form1")
+        var formdata=[
+            {
+                "name":form.name.value,
+                "describe":form.describe.value,
+                "exclusive":form.exclusive.value,
+                "mobile":form.mobile.value,
+                "email":form.email.value,
+                "wechat":form.wechat.value
+            }
+        ]
+        formdata=JSON.stringify(formdata)
+        formdata=JSON.parse(formdata)
+        return formdata
+    }
+    function provider_create(){
+        var formdata=get_form();
+        return submit(BaseUrl+'/test/72b88c04309911ec8d3d0242ac130003/v1_0_0/testprovider/create',formdata)
+    }
+    function provider_get(i){
+        return submit(BaseUrl+'/test/72b88c04309911ec8d3d0242ac130003/v1_0_0/testprovider/get',i)
+    }
+    function  provider_update(i){
+        var formdata=get_form();
+        formdata.id=i;
+        return submit(BaseUrl+'/test/72b88c04309911ec8d3d0242ac130003/api/v1_0_0/testprovider/update',formdata)
+    }
+    function pic_show(file,i){
+        var reader=new FileReader()
+        var backfile
+        reader.readAsDataURL(file)
+        reader.onload=function (e){
+            var result=document.getElementById('result')
+            result.innerHTML+='<img src="'+this.result+'"alt="" style="height: 120px;width: 90px"/>'
+            backfile=dataURLtoFile(reader.result,i)
+        }
+        return backfile
+    }
+    function pic_upload(){
+        var img_file
+        var muti_image_data=[]
+        var file=document.getElementById('file')
+        if(file.files.length==1){
+            img_file=pic_show(file.files[0],1)
+            var img_data=[
+                {
+                    'id':1,
+                    'avatar_square':img_file,
+                }
+            ]
+            submit(BaseUrl+'/test/72b88c04309911ec8d3d0242ac130003/api/v1_0_0/testprovider/avatar_square/upload',img_data)
+        }else{
+        for(var i=0;i<file.files.length;i++){
+            var file_now=file.files[i]
+            img_file=pic_show(file_now,i+1)
+            var arr={
+                "id":i+1,
+                "avatar_square":img_file,
+            }
+            muti_image_data.push(arr)
+        }
+        submit(BaseUrl+'/test/72b88c04309911ec8d3d0242ac130003/api/v1_0_0/testprovider/honor/upload',muti_image_data)
+
+    }
+    }
+    function dataURLtoFile(dataurl, filename) {
+        var arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], filename, { type: mime });
+    }
+
+
+</script>
+</body>
+</html>

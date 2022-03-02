@@ -1,0 +1,102 @@
+border.color{
+  color: red;
+}
+[att=a],[att=b],[att=c]{
+  width:180px;
+  height:182px
+}
+[color=heiheihei]{
+  color:green
+}
+#max{
+  color: aqua;
+  font-size: 50px;
+
+}
+.bgcolor{
+  background-color: blueviolet;
+  background-image:url("jjlin4.jpg");
+  background-size: 50%;
+  background-repeat: no-repeat ;
+  /*background-attachment: fixed;*/
+  background-position: center,top;
+}
+a:link{color:green;}
+a:visited{color:purple;}
+a:hover{color:black;}
+a:visited{background: black;}
+.txt:first-letter{
+  font-size: 35px;
+  height: 50px;
+  line-height: 50px;
+  color: brown;
+}
+.test:hover{
+  background-color: brown;
+  color: white;
+}
+.txt:after{
+  background-color: #b3d4fc;
+}
+.blackborder{
+  border-top-color: brown;
+  /*border-width: thick;*/
+  border-style: dashed;
+  /*background-color: #b3d4fc;*/
+}
+.class1{
+  height: 50px;
+}
+.class1:hover .class2{
+  float:right
+}
+.class1:active .class2{
+  float:left
+}
+.aaa{
+  position: absolute;
+  top: 200px;
+  left: 1000px;
+  transform: rotate(3deg);
+}
+.bbb:hover {
+  transform:rotate(30deg);
+  transition:all 1s ease;
+}
+@-webkit-keyframes aaa {
+  from{opacity: 0}
+  to{opacity: 1;}
+}
+@-webkit-keyframes bbb {
+  0%{opacity: 0}
+  20%{opacity: 1}
+  50%{-webkit-transform: scale(0.8);
+  }
+  70%{-webkit-transform: translateY(300px);}
+  80%{opacity:1}
+  100%{opacity: 0}
+}
+.pic{
+  animation: bbb 10s ease infinite;
+  animation-direction: alternate;
+}
+.img-background img{
+  width: 200px;
+  height: 200px;
+  background-color: aqua;
+}
+.image-input{
+  height: 50px;
+  width: 150px;
+  border: 1px groove black;
+  font-size: 10px;
+}
+.mouse{
+  width: 200px;
+  height: 200px;
+  background-color: black;
+  color: white;
+}
+.bg{
+  background-color: white;
+}
